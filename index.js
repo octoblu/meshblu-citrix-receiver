@@ -3,16 +3,15 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var debug = require('debug')('meshblu-citrix-receiver')
 
+DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe'
+
 var MESSAGE_SCHEMA = {
   type: 'object',
   properties: {
-    exampleBoolean: {
-      type: 'boolean',
-      required: true
-    },
-    exampleString: {
+    command: {
       type: 'string',
-      required: true
+      required: true,
+      default: 'start-receiver'
     }
   }
 };
@@ -20,15 +19,16 @@ var MESSAGE_SCHEMA = {
 var OPTIONS_SCHEMA = {
   type: 'object',
   properties: {
-    firstExampleOption: {
+    receiverPath: {
       type: 'string',
-      required: true
+      required: true,
+      default: DEFAULT_RECEIVER_PATH
     }
   }
 };
 
 function Plugin(){
-  this.options = {};
+  this.options = this.setOptions({});
   this.messageSchema = MESSAGE_SCHEMA;
   this.optionsSchema = OPTIONS_SCHEMA;
   return this;
@@ -36,8 +36,17 @@ function Plugin(){
 util.inherits(Plugin, EventEmitter);
 
 Plugin.prototype.onMessage = function(message){
-  var payload = message.payload;
-  this.emit('message', {devices: ['*'], topic: 'echo', payload: payload});
+  var command = message.command;
+  var self = this;
+
+  switch(command){
+    case 'start-receiver':
+      exec(self.options.receiverPath);
+      break;
+    default:
+      exec(self.options.receiverPath);
+      break;
+  }
 };
 
 Plugin.prototype.onConfig = function(device){
@@ -45,7 +54,7 @@ Plugin.prototype.onConfig = function(device){
 };
 
 Plugin.prototype.setOptions = function(options){
-  this.options = options;
+  this.options = _.defaults({ receiverPath: DEFAULT_RECEIVER_PATH }, options);
 };
 
 module.exports = {
