@@ -45,7 +45,7 @@ Plugin.prototype.onMessage = function(message){
   switch(command){
     case 'start-receiver':
       console.log('command to exec', self.options.receiverPath);
-      exec(self.options.receiverPath);
+      exec('"' + self.options.receiverPath + '"');
       break;
     default:
       exec(self.options.receiverPath);
