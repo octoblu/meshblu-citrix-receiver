@@ -1,8 +1,9 @@
 'use strict';
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var debug = require('debug')('meshblu-citrix-receiver')
+var debug = require('debug')('meshblu-citrix-receiver');
 var _ = require('lodash');
+var exec = require('child_process').exec;
 
 var DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe';
 
