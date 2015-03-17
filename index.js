@@ -37,7 +37,7 @@ function Plugin(){
 util.inherits(Plugin, EventEmitter);
 
 Plugin.prototype.onMessage = function(message){
-  var command = message.command;
+  var command = message.payload.command;
   var self = this;
 
   console.log('command', command);

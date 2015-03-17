@@ -1,6 +1,7 @@
 'use strict';
 var Plugin = require('./index').Plugin;
 var meshblu = require('meshblu');
+var exec = require('child_process').exec;
 
 var Connector = function(config) {
   var conx = meshblu.createConnection({
