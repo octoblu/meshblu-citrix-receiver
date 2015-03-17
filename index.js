@@ -21,6 +21,10 @@ var MESSAGE_SCHEMA = {
       type: 'string',
       required: true,
       default: 'start-receiver'
+    },
+    application: {
+      type: 'string',
+      required: false
     }
   }
 };
@@ -45,29 +49,35 @@ function Plugin(){
 util.inherits(Plugin, EventEmitter);
 
 Plugin.prototype.onMessage = function(message){
-  var command = message.payload.command;
+  var payload = message.payload || {}
+  var command = payload.command;
   var self = this;
 
   debug('command', command);
   switch(command){
     case 'start-receiver':
-      self.openApplication(); 
+      self.openApplication(payload.application); 
       break;
     default:
-      exec(self.options.receiverPath);
+      debug('Invalid command.');
       break;
   }
 };
 
-Plugin.prototype.openApplication = function(){
-  var self = this;
-  var command = self.options.receiverPath
-  debug('command to exec', command);
+Plugin.prototype.openApplication = function(application){
+  var self = this, 
+    fullCommand = '', 
+    command = self.options.receiverPath;
   if(isWindows){
-    exec('"' + command + '"');
+    fullCommand = '"' + command + '"';
+    if(application){
+      fullCommand += ' -launch -name "' + application + '"'
+    }
   }else{
-    exec('open ' + command);
+    fullCommand = 'open ' + command;
   }
+  debug('fullCommand to exec', fullCommand);
+  exec(fullCommand);
 };
 
 Plugin.prototype.onConfig = function(device){
