@@ -60,6 +60,7 @@ Plugin.prototype.onMessage = function(message){
 };
 
 Plugin.prototype.openApplication = function(){
+  var self = this;
   var command = self.options.receiverPath
   debug('command to exec', command);
   if(isWindows){
