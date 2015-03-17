@@ -11,7 +11,7 @@ var DEFAULT_RECEIVER_PATH;
 if(isWindows){
   DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe';
 }else{
-  DEFAULT_RECEIVER_PATH = '/Applications/Citrix Receiver.app'
+  DEFAULT_RECEIVER_PATH = '/Applications/Citrix\\ Receiver.app'
 }
 
 var MESSAGE_SCHEMA = {
