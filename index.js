@@ -5,7 +5,14 @@ var debug = require('debug')('meshblu-citrix-receiver');
 var _ = require('lodash');
 var exec = require('child_process').exec;
 
-var DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe';
+var isWindows = process.platform === 'win32'
+var DEFAULT_RECEIVER_PATH;
+
+if(isWindows){
+  DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe';
+}else{
+  DEFAULT_RECEIVER_PATH = '/Applications/Citrix Receiver.app'
+}
 
 var MESSAGE_SCHEMA = {
   type: 'object',
@@ -41,16 +48,24 @@ Plugin.prototype.onMessage = function(message){
   var command = message.payload.command;
   var self = this;
 
-  console.log('command', command);
+  debug('command', command);
   switch(command){
     case 'start-receiver':
-      console.log('command to exec');
-      console.log('"' + self.options.receiverPath + '"');
-      exec('"' + self.options.receiverPath + '"');
+      self.openApplication(); 
       break;
     default:
       exec(self.options.receiverPath);
       break;
+  }
+};
+
+Plugin.prototype.openApplication = function(){
+  var command = self.options.receiverPath
+  debug('command to exec', command);
+  if(isWindows){
+    exec('"' + command + '"');
+  }else{
+    exec('open ' + command);
   }
 };
 

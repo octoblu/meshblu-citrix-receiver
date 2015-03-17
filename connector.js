@@ -22,9 +22,7 @@ var Connector = function(config) {
   var plugin = new Plugin();
 
   conx.on('ready', function(){
-    console.log('on ready');
     conx.whoami({uuid: config.uuid}, function(device){
-      console.log('whoami is done');
       plugin.setOptions(device.options || {});
       conx.update({
         uuid: config.uuid,
