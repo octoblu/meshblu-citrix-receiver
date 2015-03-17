@@ -4,7 +4,7 @@ var EventEmitter = require('events').EventEmitter;
 var debug = require('debug')('meshblu-citrix-receiver')
 var _ = require('lodash');
 
-DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe'
+var DEFAULT_RECEIVER_PATH = 'C:\\Program Files (x86)\\Citrix\\SelfServicePlugin\\SelfService.exe';
 
 var MESSAGE_SCHEMA = {
   type: 'object',
