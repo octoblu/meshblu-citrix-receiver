@@ -85,7 +85,7 @@ Plugin.prototype.onConfig = function(device){
 };
 
 Plugin.prototype.setOptions = function(options){
-  this.options = _.defaults({ receiverPath: DEFAULT_RECEIVER_PATH }, options);
+  this.options = _.extend({ receiverPath: DEFAULT_RECEIVER_PATH }, options);
 };
 
 module.exports = {
