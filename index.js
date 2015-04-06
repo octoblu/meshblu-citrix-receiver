@@ -58,8 +58,11 @@ Plugin.prototype.onMessage = function(message){
     case 'start-receiver':
       self.openApplication(payload.application);
       break;
-    case 'close-receiver':
-      self.closeReceiver();
+    case 'logoff':
+      self.logoff();
+      break;
+    case 'disconnect-apps':
+      self.disconnectApplications();
       break;
     default:
       debug('Invalid command.');
@@ -67,7 +70,7 @@ Plugin.prototype.onMessage = function(message){
   }
 };
 
-Plugin.prototype.closeReceiver = function(){
+Plugin.prototype.logoff = function(){
   var self, command;
   self = this;
 
@@ -78,6 +81,22 @@ Plugin.prototype.closeReceiver = function(){
 
   command = '"' + self.options.receiverPath + '"';
   command += ' -logoff';
+  debug('executing command', command);
+  exec(command);
+  return;
+}
+
+Plugin.prototype.disconnectApplications = function() {
+  var self, command;
+  self = this;
+
+  if(!isWindows) {
+    self.emit('message', {devices: '*', topic: 'error', payload: {error: 'disconnect-applications is only available for Windows'}});
+    return;
+  }
+
+  command = '"' + self.options.receiverPath + '"';
+  command += ' -disconnectapps';
   debug('executing command', command);
   exec(command);
   return;
