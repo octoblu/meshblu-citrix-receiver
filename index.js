@@ -56,7 +56,10 @@ Plugin.prototype.onMessage = function(message){
   debug('command', command);
   switch(command){
     case 'start-receiver':
-      self.openApplication(payload.application); 
+      self.openApplication(payload.application);
+      break;
+    case 'close-receiver':
+      self.closeReceiver();
       break;
     default:
       debug('Invalid command.');
@@ -64,9 +67,25 @@ Plugin.prototype.onMessage = function(message){
   }
 };
 
+Plugin.prototype.closeReceiver = function(){
+  var self, command;
+  self = this;
+
+  if(!isWindows) {
+    self.emit('message', {devices: '*', topic: 'error', payload: {error: 'close-receiver is only available for Windows'}});
+    return;
+  }
+
+  command = '"' + self.options.receiverPath + "'";
+  command += ' -logoff';
+  debug('executing command', command);
+  exec(command);
+  return;
+}
+
 Plugin.prototype.openApplication = function(application){
-  var self = this, 
-    fullCommand = '', 
+  var self = this,
+    fullCommand = '',
     command = self.options.receiverPath;
   if(isWindows){
     fullCommand = '"' + command + '"';
