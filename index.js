@@ -76,7 +76,7 @@ Plugin.prototype.closeReceiver = function(){
     return;
   }
 
-  command = '"' + self.options.receiverPath + "'";
+  command = '"' + self.options.receiverPath + '"';
   command += ' -logoff';
   debug('executing command', command);
   exec(command);
