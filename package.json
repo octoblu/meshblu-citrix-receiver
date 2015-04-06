@@ -1,7 +1,7 @@
 {
   "name": "meshblu-citrix-receiver",
   "repository": "octoblu/meshblu-citrix-receiver",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "scripts": {
     "start": "node command.js",
     "test": "mocha"
