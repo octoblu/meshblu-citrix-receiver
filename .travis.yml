@@ -1,0 +1,12 @@
+language: node_js
+sudo: false
+node_js:
+- '0.10'
+deploy:
+  provider: npm
+  email: serveradmin@octoblu.com
+  api_key:
+    secure: ltb+DCC6xwhwe8p2lna0yDkNExqse6/AU5X/1aRqrEKtl2MDuvzNL1GGdnF/O/v0+pIFBhWeqaJjhJHz2WEVu3zhzG74ca5933VQNqdqQsCLLcv6ER1LwtpdbZK/+UbYR7pmoXLNsGxkgNg85K58+XyAhg9EqdQb4GLS9W0RjGA=
+  on:
+    tags: true
+    repo: octoblu/meshblu-citrix-receiver
