@@ -20,7 +20,7 @@ var MESSAGE_SCHEMA = {
     command: {
       type: 'string',
       required: true,
-      enum : ['open-application', 'disconnectapps', 'poll' , 'logoff'],
+      enum : ['open-application', 'disconnectapps', 'poll' , 'logoff', 'reconnectapps'],
       default: 'open-application'
     },
     application: {
