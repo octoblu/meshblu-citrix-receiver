@@ -1,7 +1,7 @@
 {
   "name": "meshblu-citrix-receiver",
   "repository": "octoblu/meshblu-citrix-receiver",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "scripts": {
     "start": "node command.js",
     "test": "mocha"
@@ -9,7 +9,7 @@
   "dependencies": {
     "debug": "^2.1.0",
     "lodash": "^3.5.0",
-    "meshblu": "^1.19.0"
+    "meshblu": "^1.30.0"
   },
   "keywords": [
     "meshblu-connector",
