@@ -1,12 +1,36 @@
 language: node_js
-sudo: false
 node_js:
 - '0.10'
+before_install:
+  - npm install npm -g
+before_deploy:
+  - npm install ws browserify coffeeify
+  - mkdir -p deploy/meshblu-citrix-receiver/latest
+  - mkdir -p deploy/meshblu-citrix-receiver/$TRAVIS_TAG
+  - node_modules/.bin/browserify -t coffeeify -s Connector connector.js > deploy/meshblu-citrix-receiver/latest/meshblu-citrix-receiver.js
+  - gzip deploy/meshblu-citrix-receiver/latest/meshblu-citrix-receiver.js
+  - mv deploy/meshblu-citrix-receiver/latest/meshblu-citrix-receiver.js.gz deploy/meshblu-citrix-receiver/latest/meshblu-citrix-receiver.js
+  - cp deploy/meshblu-citrix-receiver/latest/meshblu-citrix-receiver.js deploy/meshblu-citrix-receiver/$TRAVIS_TAG/meshblu-citrix-receiver.js
 deploy:
-  provider: npm
-  email: serveradmin@octoblu.com
-  api_key:
-    secure: ltb+DCC6xwhwe8p2lna0yDkNExqse6/AU5X/1aRqrEKtl2MDuvzNL1GGdnF/O/v0+pIFBhWeqaJjhJHz2WEVu3zhzG74ca5933VQNqdqQsCLLcv6ER1LwtpdbZK/+UbYR7pmoXLNsGxkgNg85K58+XyAhg9EqdQb4GLS9W0RjGA=
-  on:
-    tags: true
-    repo: octoblu/meshblu-citrix-receiver
+  - provider: s3
+    region: us-west-2
+    skip_cleanup: true
+    detect_encoding: true
+    access_key_id: AKIAJH2D5IPIRHYJT5IA
+    secret_access_key:
+      secure: "jd1WH4nEMdc/37YtsQRKbnCz79C/LxA8+yElCQMKhMRUOTfnVFSyqjAzxn2tj5SlNLmYyIl3dGK64cT5Q0V/ci7NGzXa61QVLpYktTlVnmb3TunwhlT+R6/AaLXXLjqgailtkfuS2+dSh6h/O0+uaodlpXx9w8JajNeIrjjh6Po="
+    bucket: octoblu-cdn
+    local-dir: deploy
+    upload-dir: js
+    on:
+      tags: true
+      all_branches: true
+  - provider: npm
+    skip_cleanup: true
+    clean_up: false
+    email: serveradmin@octoblu.com
+    api_key:
+      secure: "X62s/02A4j/0eSs4RxxtSefLTWDIbYnHpD1z+2/gASB4en3R08deLz7KKRi56dDq1UoTtvUByr8NUEyzmiEF+CvnZLInCvue4bXSU2DasWijqEMSG7ljJcwqhF7FBlk7olZ4xv/zU5p9nqiQ8nooyQlPPABxE8J8tvFx/IEZ664="
+    on:
+      tags: true
+      all_branches: true

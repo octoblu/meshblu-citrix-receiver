@@ -1,11 +1,11 @@
 'use strict';
-var util = require('util');
+var _            = require('lodash');
+var util         = require('util');
+var exec         = require('child_process').exec;
+var debug        = require('debug')('meshblu-citrix-receiver');
 var EventEmitter = require('events').EventEmitter;
-var debug = require('debug')('meshblu-citrix-receiver');
-var _ = require('lodash');
-var exec = require('child_process').exec;
 
-var isWindows = process.platform === 'win32'
+var isWindows = process.platform === 'win32' || process.platform === 'win64';
 var DEFAULT_RECEIVER_PATH;
 
 if(isWindows){
