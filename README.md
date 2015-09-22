@@ -1,5 +1,11 @@
 ## meshblu-citrix-receiver
 
+[![Build Status](https://travis-ci.org/octoblu/meshblu-citrix-receiver.svg?branch=master)](https://travis-ci.org/octoblu/meshblu-citrix-receiver)
+[![Code Climate](https://codeclimate.com/github/octoblu/meshblu-citrix-receiver/badges/gpa.svg)](https://codeclimate.com/github/octoblu/meshblu-citrix-receiver)
+[![Test Coverage](https://codeclimate.com/github/octoblu/meshblu-citrix-receiver/badges/coverage.svg)](https://codeclimate.com/github/octoblu/meshblu-citrix-receiver)
+[![npm version](https://badge.fury.io/js/meshblu-citrix-receiver.svg)](http://badge.fury.io/js/meshblu-citrix-receiver)
+[![Gitter](https://badges.gitter.im/octoblu/help.svg)](https://gitter.im/octoblu/help)
+
 A Meshblu connector for use in Octoblu or with other services.
 
 ### Setup Instructions
