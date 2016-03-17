@@ -24,7 +24,10 @@ var MESSAGE_SCHEMA = {
       default: 'open-application'
     },
     application: {
-      type: 'string',
+      type: 'array',
+      items: {
+        type: 'string'
+      },
       required: false
     }
   }
@@ -55,7 +58,15 @@ Plugin.prototype.onMessage = function(message){
   var self = this;
 
   if(command === 'start-receiver' || command === 'open-application') {
-    self.openApplication(payload.application);
+    if(Array.isArray(payload.application)){
+      payload.application.forEach(function(app){
+        debug('Launching: ', app);
+        self.openApplication(app);
+      });
+    }else{
+      debug('Launching: ', payload.application);
+      self.openApplication(payload.application);
+    }
     return;
   }
 
